@@ -26,3 +26,7 @@ The criteria from school was the following:
 ##Task 3: Restore
 - Delete the example table. Test the restore: decrypt, depackage and import the backup manually.
 - Create a bash script, which automates the above proccess.
+
+#Notes
+The import file is aviable at www.domayntec.ch/addressen.sql
+
