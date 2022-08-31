@@ -23,9 +23,9 @@ mysql-recovery [database]
 #criteria
 The criteria from school was the following:
 
-##Task 1: Instellation
+##Task 1: installation
 - install mysql-server on a debian like VM.
-- Secure the mysql-instellation
+- Secure the mysql-installation
 - change the root password at least once
 - create database "Clients"
 - import a given file to the database

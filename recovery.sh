@@ -3,13 +3,13 @@
 #Working Values
 database=$1
 workingdir=/tmp/sqlbak
-configdir=/etc/mysql-bzu
+configdir=/etc/mysql-backup
 backupdir=/backup
 keydir=${configdir}/keys
 privkey=${keydir}/.private/private_key.pem
 mysqluserfile=${configdir}/mysqluser.txt.encrypted
 mysqlpassfile=${configdir}/mysqlpass.txt.encrypted
-password="F45e$q%fh}" #unfortunaly hardcoded
+backuppassfile=${configdir}/backuppass.txt.encrypted
 
 #Use default DB name if empty
 if [[ -z $database ]];
@@ -20,6 +20,8 @@ fi
 #decrypt credentials
 openssl rsautl -decrypt -inkey $privkey -in $mysqluserfile -out ${configdir}/mysqluser.txt
 openssl rsautl -decrypt -inkey $privkey -in $mysqlpassfile -out ${configdir}/mysqlpass.txt
+openssl rsautl -decrypt -inkey $privkey -in $backuppassfile -out ${configdir}/backuppass.txt
+password=`cat ${configdir}/backuppass.txt`
 sqluser=`cat ${configdir}/mysqluser.txt`
 sqlpass=`cat ${configdir}/mysqlpass.txt`
 
@@ -55,3 +57,4 @@ mysql -u $sqluser -p$sqlpass < commands.sql
 rm -rf $workingdir
 rm ${configdir}/mysqluser.txt
 rm ${configdir}/mysqlpass.txt
+rm ${configdir}/backuppass.txt

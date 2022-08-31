@@ -3,8 +3,8 @@
 
 #Script starts at bottom.
 
-function instellation {
-	#Starts full instellation	
+function installation {
+	#Starts full installation	
 	#make scripts executable
 	chmod +x sqlbak.sh
 	chmod +x restart.sh
@@ -68,15 +68,19 @@ function credentials {
 	#ask for credentials and saves to value
 	read -p "Enter a valid mySQL-Username: " sqluser
 	read -s -p "Enter the mySQL Passwortfor user $sqluser: " sqlpass
+	read -s -p "Enter encryption password for Backup: " backuppass
 	echo ''
 	#save credentials to file
 	echo $sqluser > ${configdir}/$userfile
 	echo $sqlpass > ${configdir}/$passfile
+	echo $backuppass > ${configdir}/$backuppassfile
 	#encrypt credentials
 	encryptCredentials ${configdir}/$userfile
 	encryptCredentials ${configdir}/$passfile
+	encryptCredentials ${configdir}/$backuppassfile
 	rm ${configdir}/$userfile
 	rm ${configdir}/$passfile
+	rm ${configdir}/$backuppassfile
 	
 		
 }
@@ -95,11 +99,11 @@ function registerCronjob {
 
 function _start {
 	#starts here
-	#full instellation or just new mysql-credentials'
-	read -p "Do you want a complete instellation or just update the credentials? [C/u] " choice
+	#full installation or just new mysql-credentials'
+	read -p "Do you want a complete installation or just update the credentials? [C/u] " choice
 	if [[ -z "$choice" ]] || [[ $choice == "c" ]] || [[ $choice == "C" ]]; then
 		#perform full isntellation
-		instellation
+		installation
 		credentials
 		registerCronjob
 	
@@ -118,11 +122,13 @@ function _start {
 
 #working values
 #configdir with credentials and keys stored
-configdir=/etc/mysql-bzu
+configdir=/etc/mysql-backup
 #file with username
 userfile=mysqluser.txt
 #file with password
 passfile=mysqlpass.txt
+#file with encryption password
+backuppassfile=backuppass.txt
 #dir with keypair
 keydir=${configdir}/keys
 #dir with the privatekey
