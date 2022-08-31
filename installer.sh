@@ -10,9 +10,9 @@ function instellation {
 	chmod +x restart.sh
 	chmod +x recovery.sh
 	#copy to /bin for easy call
-	mv sqlbak.sh /bin/sqlbak
-	mv restart.sh /bin/remysql
-	mv recovery.sh /bin/mysql-recovery
+	mv sqlbak.sh /usr/bin/sqlbak
+	mv restart.sh /usr/bin/remysql
+	mv recovery.sh /usr/bin/mysql-recovery
 	#make config directories for config & key pairs
 	mkdir -p $configdir
 	mkdir -p $keydir
@@ -86,7 +86,7 @@ function registerCronjob {
 	#make file
 	touch mycron
 	#write cronjob to file
-	echo "00 00 * * * /bin/sqlbak" > mycron
+	echo "00 00 * * * /usr/bin/sqlbak" > mycron
 	#register cronjob
 	crontab mycron
 	#remove file
